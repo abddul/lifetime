@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
       display: block;
       margin-top: 10px;
     }
-    input, button {
+    input, button, select {
       margin: 5px;
       padding: 10px;
       font-size: 16px;
@@ -52,7 +52,6 @@
     .large-blinking-text {
       font-size: 36px;
       font-weight: bold;
-      animation: blink 3s infinite;
     }
     @keyframes blink {
       0% { color: black; }
@@ -60,6 +59,9 @@
       50% { color: red; }
       75% { color: blue; }
       100% { color: black; }
+    }
+    .blinking-number {
+      animation: blink 3s infinite;
     }
     .red-text { color: red; }
     .black-text { color: black; }
@@ -69,8 +71,9 @@
       justify-content: space-between;
       width: 100%;
       margin-top: 5px;
-      font-size: 18px;
+      font-size: 24px;
       position: relative;
+      font-weight: bold;
     }
     .percentages span {
       position: absolute;
@@ -81,6 +84,17 @@
 <body>
   <div class="container">
     <h1>Life Progress Tracker</h1>
+    <label for="language">Select Language:</label>
+    <select id="language">
+      <option value="ar" selected>العربية</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="zh">中文</option>
+      <option value="ru">Русский</option>
+    </select>
+    
     <label for="name">Name:</label>
     <input type="text" id="name" placeholder="Enter your name" required>
     
@@ -109,14 +123,14 @@
       const totalWeeks = yearsToLive * 52;
       const passedWeeks = Math.floor((currentDate - dob) / (1000 * 60 * 60 * 24 * 7));
       const remainingWeeks = totalWeeks - passedWeeks;
-      const currentWeek = passedWeeks + 1;
       
       const pastPercent = ((passedWeeks / totalWeeks) * 100).toFixed(2);
       const remainingPercent = ((remainingWeeks / totalWeeks) * 100).toFixed(2);
       
       document.getElementById('result').innerHTML = `
-        <div style="font-size: 32px;"><strong>${name}</strong> You Spent <span class="red-text">${passedWeeks}</span> / <span class="black-text">${totalWeeks}</span> weeks.</div>
-        <div class="large-blinking-text">${remainingWeeks} weeks left</div>
+        <div style="font-size: 36px; font-weight: bold;"> 
+          <span class="red-text">Attention</span> ${name}:: Only <span class="blinking-number">${remainingWeeks}</span> weeks of your life left
+        </div>
       `;
       
       generateProgressBar(passedWeeks, remainingWeeks, totalWeeks, pastPercent, remainingPercent);
@@ -139,7 +153,7 @@
 
       const percentages = document.getElementById('percentages');
       percentages.innerHTML = `
-        <span class="red-text" style="left:${(passedWeeks / totalWeeks) * 50}%">${pastPercent}%</span>
+        <span class="red-text" style="left:${(passedWeeks / totalWeeks) * 50}%">${pastPercent}% of your life has passed</span>
         <span class="green-text" style="left:${(passedWeeks / totalWeeks) * 100 + (remainingWeeks / totalWeeks) * 50}%">${remainingPercent}%</span>
       `;
     }
